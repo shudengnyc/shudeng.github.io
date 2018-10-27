@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "NOAA data"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -28,20 +28,38 @@ ny_noaa_raw_data %>%
          month = as.numeric(month)
          ) %>% 
         select(-date)
-head(ny_noaa_clean_data)
+#head(ny_noaa_clean_data)
 ```
 
 
 ```{r plot}
+# heat map
 temp_data = 
   ny_noaa_clean_data %>% 
   select(tmax,tmin) %>% 
   filter(!is.na(tmax) & !is.na(tmin))
 
+tmax_min_heatmap = 
+  plot_ly(temp_data, x = ~tmax, y = ~tmin) %>% 
+  add_histogram2d()
 
-plot_ly(temp_data, x = ~tmax, y = ~tmin, type = "scatter"
-        , mode = "markers", alpha = 0.5)
 
+# violin plot
+snowfall_data =
+  ny_noaa_clean_data %>% 
+  select(year,snow) %>% 
+  filter(snow > 0 & snow < 100)
+  
+snow_plot = 
+  plot_ly(snowfall_data, y = ~snow, x = ~year , type = "violin")
+  
+  
+# scatter plot 
+
+# ny_noaa_clean_data %>% 
+#   group_by(year, month) %>% 
+#   summarise(total_prcp = sum(prcp, na.rm = TRUE)) %>% 
+#   plot_ly(x = ~year , y = ~total_prcp, type = "scatter", mode = "markers")
 ```
 
 
@@ -53,7 +71,7 @@ Column {data-width=650}
 ### Chart A
 
 ```{r}
-
+tmax_min_heatmap
 ```
 
 Column {data-width=350}
@@ -62,13 +80,16 @@ Column {data-width=350}
 ### Chart B
 
 ```{r}
-
+snow_plot
 ```
 
 ### Chart C
 
 ```{r}
-
+ny_noaa_clean_data %>% 
+  group_by(year, month) %>% 
+  summarise(total_prcp = sum(prcp, na.rm = TRUE)) %>% 
+  plot_ly(x = ~year , y = ~total_prcp, type = "scatter", mode = "markers")
 ```
 
 
