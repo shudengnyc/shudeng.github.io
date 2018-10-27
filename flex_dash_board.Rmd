@@ -1,0 +1,75 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(plotly)
+```
+
+```{r load NOAA data}
+library(p8105.datasets)
+ny_noaa_raw_data = p8105.datasets::ny_noaa %>% 
+  janitor::clean_names()
+```
+```{r Clean NOAA data}
+ny_noaa_clean_data = 
+ny_noaa_raw_data %>%
+  mutate(year =  as.numeric(format(as.Date(ny_noaa_raw_data$date, format = "%d/%m/%Y"), "%Y")),   #reformat year month and day
+         month =  as.numeric(format(as.Date(ny_noaa_raw_data$date, format = "%d/%m/%Y"), "%m")),
+         day  =  as.numeric(format(as.Date(ny_noaa_raw_data$date, format = "%d/%m/%Y"), "%d")), 
+         tmax =  as.numeric(tmax)/10,  #reformat and adjust valye of perciptation and min/max temp
+         tmin =  as.numeric(tmin)/10,
+         prcp =  prcp/10, 
+         month = as.numeric(month)
+         ) %>% 
+        select(-date)
+head(ny_noaa_clean_data)
+```
+
+
+```{r plot}
+temp_data = 
+  ny_noaa_clean_data %>% 
+  select(tmax,tmin) %>% 
+  filter(!is.na(tmax) & !is.na(tmin))
+
+
+plot_ly(temp_data, x = ~tmax, y = ~tmin, type = "scatter"
+        , mode = "markers", alpha = 0.5)
+
+```
+
+
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
+
+
