@@ -33,27 +33,6 @@ ny_noaa_raw_data %>%
 
 
 ```{r plot}
-# heat map
-temp_data = 
-  ny_noaa_clean_data %>% 
-  select(tmax,tmin) %>% 
-  filter(!is.na(tmax) & !is.na(tmin))
-
-tmax_min_heatmap = 
-  plot_ly(temp_data, x = ~tmax, y = ~tmin) %>% 
-  add_histogram2d()
-
-
-# violin plot
-snowfall_data =
-  ny_noaa_clean_data %>% 
-  select(year,snow) %>% 
-  filter(snow > 0 & snow < 100)
-  
-snow_plot = 
-  plot_ly(snowfall_data, y = ~snow, x = ~year , type = "violin")
-  
-  
 # scatter plot 
 
 # ny_noaa_clean_data %>% 
@@ -68,10 +47,19 @@ snow_plot =
 Column {data-width=650}
 -----------------------------------------------------------------------
 
-### Chart A
+### Average Snow Fall per Month (1981~2010)
 
-```{r}
-tmax_min_heatmap
+```{r chart 1}
+# snowed per month // bar plot
+ny_noaa_clean_data %>% 
+  filter(!is.na(snow)) %>% 
+  group_by(month) %>% 
+  summarise(avg_snowfall = mean(snow)) %>%
+  plot_ly(x = ~month, y = ~avg_snowfall, type = "bar") %>% 
+  layout(title = "Average Snow Fall per Month (1981~2010)" , 
+         yaxis = list(title = "Average monthly snow fall (mm)"), 
+         xaxis = list(title = "Month"))
+
 ```
 
 Column {data-width=350}
@@ -79,17 +67,29 @@ Column {data-width=350}
 
 ### Chart B
 
-```{r}
-snow_plot
+```{r box plot}
+# box plot
+ny_noaa_clean_data %>% 
+  filter(year >= 2000) %>% 
+  group_by(year, month) %>% 
+  summarise(total_prcp = sum(prcp, na.rm = TRUE)) %>% 
+  plot_ly(x = ~year , y = ~total_prcp, type = "box") %>% 
+  layout(title = "ditribution of yearly Precipitation (2000~2010)" , 
+       yaxis = list(title = "Precipitation (mm)"), 
+       xaxis = list(title = "Year"))  
 ```
 
 ### Chart C
 
-```{r}
+```{r scatter }
+
 ny_noaa_clean_data %>% 
-  group_by(year, month) %>% 
-  summarise(total_prcp = sum(prcp, na.rm = TRUE)) %>% 
-  plot_ly(x = ~year , y = ~total_prcp, type = "scatter", mode = "markers")
+  select(year,snow) %>% 
+  filter(snow > 0 & snow < 100 & year >= 2000) %>% 
+  plot_ly(y = ~snow, x = ~year , type = "box") %>% 
+  layout(title = "ditribution of yearly snowfall (2000~2010)" , 
+       yaxis = list(title = "Snow Fall (mm)"), 
+       xaxis = list(title = "Year"))
 ```
 
 
