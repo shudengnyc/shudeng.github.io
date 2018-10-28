@@ -77,19 +77,24 @@ ny_noaa_clean_data %>%
   layout(title = "ditribution of yearly Precipitation (2000~2010)" , 
        yaxis = list(title = "Precipitation (mm)"), 
        xaxis = list(title = "Year"))  
-```
+ ```
 
 ### Chart C
 
-```{r scatter }
-
+```{r scatter plot }
+# scatter plot 
 ny_noaa_clean_data %>% 
-  select(year,snow) %>% 
-  filter(snow > 0 & snow < 100 & year >= 2000) %>% 
-  plot_ly(y = ~snow, x = ~year , type = "box") %>% 
-  layout(title = "ditribution of yearly snowfall (2000~2010)" , 
-       yaxis = list(title = "Snow Fall (mm)"), 
-       xaxis = list(title = "Year"))
+  filter(!is.na(tmax) & !is.na(tmin) & year == 2000) %>% 
+  group_by(month) %>% 
+  mutate(monthly_avg = mean(tmax)) %>% 
+  plot_ly(y = ~monthly_avg, x = ~month ,
+          type = "scatter", 
+          mode = 'line') %>% 
+  layout(title = "Max temperature in year 2000" , 
+         yaxis = list(title = "Temp (ºC)"), 
+         xaxis = list(title = "Month")
+         )  
+  
 ```
 
 
