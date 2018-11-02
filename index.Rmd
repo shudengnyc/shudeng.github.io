@@ -1,6 +1,5 @@
 
 ---
-title: "Holy cow!"
 output:
   html_document:
     theme:  cosmo
@@ -16,8 +15,10 @@ body {
     background-repeat: no-repeat;
 }
 </style>
-### Shuiang Deng
-### TODO: Make a landing page
+
+
+<div style = "color : white;  font-size: 40px;" > Shuliang Deng </div>
+<div style = "color : white;  font-size: 20px;" >MS Bio-Stats 2020</div>
 
 ```{r }
 

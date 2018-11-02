@@ -1,30 +1,56 @@
 ---
-title: "resume"
-author: "Shu Deng"
-date: "10/27/2018"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+Shuliang Deng
+============
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+-------------------     ----------------------------
+100 Haven Ave             shuliang.deng@columbia.edu
+New York, NY, 10032
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+-------------------     ----------------------------
 
-```{r cars}
-summary(cars)
-```
+<br />
 
-## Including Plots
+Education
+---------
 
-You can also embed plots, for example:
+<br />
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+2018-2020 
+:   **MS, Biostatistics**; Columbia University (New York City)
+<br />
+<br />
+2011-2013
+:   **BS, Clinical Nutrition **; University of California at Davis (Davis)
+<br />
+<br />
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Experience
+----------
+
+**A medical device company**
+
+Developed a in vitro diagnosis product which passed FDA 510K clearence. 
+
+
+
+**A nutrition company **
+
+Tested chemical content of various nutrtion products
+
+
+Extra 
+----------------------------------------
+
+* Human Languages:
+
+     * English 
+     * Madrian 
