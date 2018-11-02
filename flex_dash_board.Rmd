@@ -12,11 +12,13 @@ library(plotly)
 ```
 
 ```{r load NOAA data}
+# load data and clean names 
 library(p8105.datasets)
 ny_noaa_raw_data = p8105.datasets::ny_noaa %>% 
   janitor::clean_names()
 ```
 ```{r Clean NOAA data}
+# cleaning data, give appropriate data type 
 ny_noaa_clean_data = 
 ny_noaa_raw_data %>%
   mutate(year =  as.numeric(format(as.Date(ny_noaa_raw_data$date, format = "%d/%m/%Y"), "%Y")),   #reformat year month and day
@@ -29,16 +31,6 @@ ny_noaa_raw_data %>%
          ) %>% 
         select(-date)
 #head(ny_noaa_clean_data)
-```
-
-
-```{r plot}
-# scatter plot 
-
-# ny_noaa_clean_data %>% 
-#   group_by(year, month) %>% 
-#   summarise(total_prcp = sum(prcp, na.rm = TRUE)) %>% 
-#   plot_ly(x = ~year , y = ~total_prcp, type = "scatter", mode = "markers")
 ```
 
 
@@ -68,11 +60,11 @@ Column {data-width=350}
 ### Chart B
 
 ```{r box plot}
-# box plot
+# box plot for distribution of early rain fall 
 ny_noaa_clean_data %>% 
-  filter(year >= 2000) %>% 
+  filter(year >= 2000) %>%    # filter to a smaller year 
   group_by(year, month) %>% 
-  summarise(total_prcp = sum(prcp, na.rm = TRUE)) %>% 
+  summarise(total_prcp = sum(prcp, na.rm = TRUE)) %>%  # get total railfall
   plot_ly(x = ~year , y = ~total_prcp, type = "box") %>% 
   layout(title = "ditribution of yearly Precipitation (2000~2010)" , 
        yaxis = list(title = "Precipitation (mm)"), 
@@ -84,13 +76,13 @@ ny_noaa_clean_data %>%
 ```{r scatter plot }
 # scatter plot 
 ny_noaa_clean_data %>% 
-  filter(!is.na(tmax) & !is.na(tmin) & year == 2000) %>% 
-  group_by(month) %>% 
+  filter(!is.na(tmax) & !is.na(tmin) & year == 2000) %>%  # filter years so dataset not too big 
+  group_by(month) %>%      # display month later 
   mutate(monthly_avg = mean(tmax)) %>% 
   plot_ly(y = ~monthly_avg, x = ~month ,
           type = "scatter", 
           mode = 'line') %>% 
-  layout(title = "Max temperature in year 2000" , 
+  layout(title = "Max temperature in year 2000" ,   # add labs 
          yaxis = list(title = "Temp (ºC)"), 
          xaxis = list(title = "Month")
          )  

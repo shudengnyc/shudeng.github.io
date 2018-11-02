@@ -18,7 +18,7 @@ body {
 
 
 <div style = "color : white;  font-size: 40px;" > Shuliang Deng </div>
-<div style = "color : white;  font-size: 20px;" >MS Bio-Stats 2020</div>
+<div style = "color : white;  font-size: 20px;" > MS Bio-Stats 2020</div>
 
 ```{r }
 
